@@ -16,6 +16,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.website.domain.LoginCommand;
 import com.website.domain.User;
+import com.website.securityt.util.MD5;
 import com.website.service.UserService;
 
 @Controller
@@ -45,6 +46,7 @@ public class LoginController {
 	@ResponseBody
 	public Map appLogin(LoginCommand loginCommand){
 		Map<String,Object> map = new HashMap<String, Object>();
+		loginCommand.setPassword(MD5.getMD5(loginCommand.getPassword()));
 		boolean isValidUser = userService.hasMatchUser(loginCommand.getUserName(), loginCommand.getPassword());
 		if(!isValidUser){
 			map.put("result", 0);
@@ -63,7 +65,7 @@ public class LoginController {
 		boolean isRegister = userService.hasRegister(loginCommand.getUserName().trim());
 		if(isRegister){
 			map.put("result", 0);
-			map.put("message","账号密码错误");
+			map.put("message","此用户名已注册");
 			return map;
 		}
 		userService.register(loginCommand);

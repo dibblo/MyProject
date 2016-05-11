@@ -45,12 +45,12 @@ public class UserService {
 	public void register(LoginCommand login) {
 		User user = new User();
 		user.setUserName(login.getUserName());
-		user.setUserName(MD5.getMD5(login.getPassword()));
+		user.setPassword((MD5.getMD5(login.getPassword())));
 		userDao.register(user);
 	}
 	
 	public boolean hasRegister(String userName) {
-		return null != userDao.hasRegister(userName);
+		return userDao.hasRegister(userName);
 	}
 
 }

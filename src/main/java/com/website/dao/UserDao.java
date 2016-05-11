@@ -55,23 +55,12 @@ public class UserDao {
 	}
 	
 	public void register(User user){
-		String sqlStr = "insert into t_user(user_name,password) values("+user.getUserName()+","+user.getPassword() + ")";
+		String sqlStr = "insert into t_user(user_name,password) values('"+user.getUserName()+"','"+user.getPassword() + "')";
 		jdbcTemplate.execute(sqlStr);
 	}
 	
-	public User hasRegister(String userName){
-		String sqlStr = "select * from t_user where user_name = ?";
-		return jdbcTemplate.queryForObject(sqlStr, new RowMapper<User>(){
-			@Override
-			public User mapRow(ResultSet rs, int arg1) throws SQLException {
-				User u = new User();
-				u.setUserName(rs.getString("user_name"));
-				u.setCredits(rs.getInt("credits"));
-				u.setUserId(rs.getInt("user_id"));
-				u.setLasstVist(rs.getDate("last_visit"));
-				u.setLastIp(rs.getString("last_ip"));
-				return u;
-			}
-		}, userName);
+	public boolean hasRegister(String userName){
+		String sqlStr = "select count(1) from t_user where user_name = ?";
+		return jdbcTemplate.queryForObject(sqlStr, int.class, userName) != 0;
 	}
 }
