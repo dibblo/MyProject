@@ -22,14 +22,7 @@ public class UserDao {
 		String sqlStr = "select * from t_user where user_name = ? ";
 		return  jdbcTemplate.queryForObject(sqlStr, new RowMapper<User>(){
 			public User mapRow(ResultSet rs, int rowNum) throws SQLException {
-				// TODO Auto-generated method stub
-				User u = new User();
-				u.setUserName(rs.getString("user_name"));
-				u.setCredits(rs.getInt("credits"));
-				u.setUserId(rs.getInt("user_id"));
-				u.setLasstVist(rs.getDate("last_visit"));
-				u.setLastIp(rs.getString("last_ip"));
-				return u;
+				return User.initUser(rs);
 			}
 		}, userName);
 	}
@@ -43,19 +36,13 @@ public class UserDao {
 		return  jdbcTemplate.queryForObject(sqlStr, new RowMapper<User>(){
 			public User mapRow(ResultSet rs, int rowNum) throws SQLException {
 				// TODO Auto-generated method stub
-				User u = new User();
-				u.setUserName(rs.getString("user_name"));
-				u.setCredits(rs.getInt("credits"));
-				u.setUserId(rs.getInt("user_id"));
-				u.setLasstVist(rs.getDate("last_visit"));
-				u.setLastIp(rs.getString("last_ip"));
-				return u;
+				return User.initUser(rs);
 			}
 		}, userName, password);
 	}
 	
 	public void register(User user){
-		String sqlStr = "insert into t_user(user_name,password) values('"+user.getUserName()+"','"+user.getPassword() + "')";
+		String sqlStr = "insert into t_user(user_name,password) values('"+user.getUserName()+"','"+user.getPassword() +"','"+ user.getPrimaryKey()+"','"+user.getPublicKey() + "')";
 		jdbcTemplate.execute(sqlStr);
 	}
 	

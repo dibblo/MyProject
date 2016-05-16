@@ -1,5 +1,7 @@
 package com.website.service;
 
+import java.util.UUID;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -42,7 +44,7 @@ public class UserService {
 	}
 
 	@Transactional
-	public void register(LoginCommand login) {
+	public void registerByMd5(LoginCommand login) {
 		User user = new User();
 		user.setUserName(login.getUserName());
 		user.setPassword((MD5.getMD5(login.getPassword())));
@@ -51,6 +53,15 @@ public class UserService {
 	
 	public boolean hasRegister(String userName) {
 		return userDao.hasRegister(userName);
+	}
+	
+	public void registerByRSA(LoginCommand login){
+		User user = new User();
+		user.setUserName(login.getUserName());
+		user.setPassword(login.getPassword());
+		user.setPrimaryKey(UUID.randomUUID().toString());
+		user.setPrimaryKey(UUID.randomUUID().toString());
+		userDao.register(user);
 	}
 
 }
