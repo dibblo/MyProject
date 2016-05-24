@@ -1,9 +1,7 @@
 package com.website.controller;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -17,11 +15,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.website.common.domain.Message;
 import com.website.domain.LoginCommand;
 import com.website.domain.User;
-import com.website.securityt.util.MD5;
 import com.website.securityt.util.RSA;
+import com.website.securityt.util.RSAUtil;
 import com.website.service.UserService;
 
 @Controller
@@ -49,9 +46,12 @@ public class LoginController {
 	
 	@RequestMapping(value="/applogin", method={RequestMethod.POST,RequestMethod.GET},produces=MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
-	public Map appLogin(LoginCommand loginCommand){
+	public Map appLogin(LoginCommand loginCommand) throws Exception{
 		Map<String,Object> map = new HashMap<String, Object>();
-		loginCommand.setPassword(MD5.getMD5(loginCommand.getPassword()));
+		
+		byte[] bytePassword = RSAUtil.decrypt(RSAUtil.getKeyPair().getPrivate(), loginCommand.getPassword());
+		String stringPassword = new String(bytePassword);
+		loginCommand.setPassword(new StringBuffer(stringPassword).reverse().toString());
 		boolean isValidUser = userService.hasMatchUser(loginCommand.getUserName(), loginCommand.getPassword());
 		if(!isValidUser){
 			map.put("result", 0);
