@@ -35,7 +35,7 @@
 	<bean id="conversion-service"
 		class="org.springframework.format.support.FormattingConversionServiceFactoryBean">
 	</bean>
-	
+	<mvc:resources location="/WEB-INF/js/" mapping="/js/**"/>
 	<mvc:annotation-driven conversion-service="conversion-service">
 		<mvc:message-converters>
 			<bean
@@ -83,4 +83,29 @@
 	<bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">
 		<property name="dataSource" ref="dataSource" />
 	</bean>
+
+    <bean id="doAutoTrialAcuraAUTO"
+          class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+        <property name="targetObject" ref="quotaDetailService" />
+        <property name="targetMethod" value="doAutoTrialACURA" />
+        <property name="concurrent" value="false" />
+    </bean>
+    <bean id="doAutoTrialAcuraTrigger"
+          class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+        <property name="jobDetail">
+            <ref bean="doAutoTrialAcuraAUTO" />
+        </property>
+        <property name="cronExpression">
+            <value>0 0/1 * * * ?</value>
+        </property>
+    </bean>
+    <bean class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
+        <property name="triggers">
+            <list>
+
+                <ref local="doAutoTrialAcuraTrigger" />
+            </list>
+        </property>
+    </bean>
+
 </beans>

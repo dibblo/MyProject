@@ -10,7 +10,7 @@ public class LoginLog implements Serializable {
 	 */
 	private static final long serialVersionUID = 6551097567487096359L;
 	private int loginLogId;
-	private int userId;
+	private String userId;
 	private String ip;
 	private Date loginDate;
 	public int getLoginLogId() {
@@ -19,10 +19,10 @@ public class LoginLog implements Serializable {
 	public void setLoginLogId(int loginLogId) {
 		this.loginLogId = loginLogId;
 	}
-	public int getUserId() {
+	public String getUserId() {
 		return userId;
 	}
-	public void setUserId(int userId) {
+	public void setUserId(String userId) {
 		this.userId = userId;
 	}
 	public String getIp() {

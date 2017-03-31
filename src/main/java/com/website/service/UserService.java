@@ -2,6 +2,7 @@ package com.website.service;
 
 import java.util.UUID;
 
+import com.website.securityt.util.RSA;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -27,6 +28,13 @@ public class UserService {
 	@Transactional
 	public User findUserByUserName(String userName) {
 		return userDao.findUserByUserName(userName);
+	}
+
+
+	public boolean isPasswordValid(String password, User user) {
+		boolean flag = false;
+		RSA.encryptByPublicKey(password.getBytes(), user.getPublicKey());
+		return flag;
 	}
 	@Transactional
 	public void LoginSuccess(User user) {
