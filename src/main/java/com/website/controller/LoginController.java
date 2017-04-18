@@ -19,7 +19,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 @Controller
-@RequestMapping(value="/login")
+@RequestMapping(value = "/login")
 public class LoginController {
     @Autowired
     private UserService userService;
@@ -28,8 +28,9 @@ public class LoginController {
     public String loginPage() {
         return "login/login";
     }
+
     @RequestMapping(value = "/register")
-    public String registerPage(){
+    public String registerPage() {
         return "login/register";
     }
 
@@ -39,7 +40,6 @@ public class LoginController {
         if (!isValidUser) {
             return new ModelAndView("login", "error", "账号密码错误");
         }
-        System.out.print("1111");
         User user = userService.findUserByUserName(loginCommand.getUserName());
         user.setLasstVist(new Date());
         user.setLastIp(req.getRemoteAddr());
