@@ -38,7 +38,7 @@ public class LoginController {
     public ModelAndView loginCheck(HttpServletRequest req, LoginCommand loginCommand) {
         boolean isValidUser = userService.hasMatchUser(loginCommand.getUserName(), loginCommand.getPassword());
         if (!isValidUser) {
-            return new ModelAndView("/jsp/login/login", "error", "账号密码错误");
+            return new ModelAndView("/html/login.html", "error", "此用户不存在");
         }
         User user = userService.findUserByUserName(loginCommand.getUserName());
         user.setLasstVist(new Date());

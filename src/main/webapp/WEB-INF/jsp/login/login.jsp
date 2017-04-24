@@ -1,28 +1,59 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-         pageEncoding="UTF-8" isELIgnored="false" %>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE html>
 <html>
 <head>
+    <title>Bootstrap 模板</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- 引入 Bootstrap -->
+    <link href="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- HTML5 Shim 和 Respond.js 用于让 IE8 支持 HTML5元素和媒体查询 -->
+    <!-- 注意： 如果通过 file://  引入 Respond.js 文件，则该文件无法起效果 -->
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
     <script type="text/javascript" src="/js/jquery-1.12.3.min.js"></script>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-    <title>登录</title>
-    <script type="">
-        $(function () {
-            $("#register").click(function(){
-                window.location.href="login/register";
-            });
-        })
+    <script>
+        $(function(){
+           $("#register").click(function(){
+               window.location="/register";
+           });
+        });
     </script>
 </head>
 <body>
-<form method="post" action='/login/siteLogin'>
-    <div>
-        账号：<input type="text" name="userName"/><br>
-        密码：<input type="password" name="password"/>
-        <input type="submit" value="登录"/>
-        <input id="register" type="button" value="注册"/>
+<div class="container">
+    <div class="row clearfix">
+        <div class="col-md-12 column">
+        </div>
     </div>
-</form>
+    <div class="row clearfix">
+        <div class="col-md-4 column">
+        </div>
+        <div class="col-md-4 column">
+            <form role="form" method="post" action="/login/siteLogin">
+                <div class="form-group">
+                    <label for="exampleInputEmail1">Email address</label><input type="email" class="form-control"
+                                                                                id="exampleInputEmail1"/>
+                </div>
+                <div class="form-group">
+                    <label for="exampleInputPassword1">Password</label><input type="password" class="form-control"
+                                                                              id="exampleInputPassword1"/>
+                </div>
+                <div class="checkbox">
+                    <label><input type="checkbox"/>Check me out</label>
+                </div>
+                <button type="submit" class="btn btn-default">Submit</button>
+                <button type="button" id="register" class="btn btn-default">Submit</button>
+            </form>
+        </div>
+        <div class="col-md-4 column">
+        </div>
+    </div>
+    <div class="row clearfix">
+        <div class="col-md-12 column">
+        </div>
+    </div>
+</div>
 </body>
 </html>

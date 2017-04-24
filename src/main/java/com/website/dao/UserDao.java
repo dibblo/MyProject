@@ -15,8 +15,8 @@ public class UserDao {
 	@Autowired
 	private JdbcTemplate jdbcTemplate;
 	public int getMatchCount(String userName, String password){
-		String sqlStr = "select count(1) from t_user where user_name=? and password=?";
-		return jdbcTemplate.queryForObject(sqlStr, int.class, userName,password);
+		String sqlStr = "select count(1) from t_user where user_name=?";
+		return jdbcTemplate.queryForObject(sqlStr, int.class, userName);
 	}
 	public User findUserByUserName(final String userName){
 		String sqlStr = "select * from t_user where user_name = ? ";

@@ -11,6 +11,13 @@
     <title>Title</title>
 </head>
 <body>
-
+<form method="post" action='/login/siteLogin'>
+    <div>
+        账号：<input type="text" name="userName"/><br>
+        密码：<input type="password" name="password"/>
+        <input type="submit" value="登录"/>
+        <input id="register" type="button" value="注册"/>
+    </div>
+</form>
 </body>
 </html>
