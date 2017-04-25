@@ -26,26 +26,26 @@ public class LoginController {
 
     @RequestMapping(value = "/login")
     public String loginPage() {
-        return "login/login";
+        return "/jsp/login/login.jsp";
     }
 
     @RequestMapping(value = "/register")
     public String registerPage() {
-        return "login/register";
+        return "/jsp/login/register.jsp";
     }
 
     @RequestMapping(value = "/siteLogin", method = {RequestMethod.POST})
     public ModelAndView loginCheck(HttpServletRequest req, LoginCommand loginCommand) {
         boolean isValidUser = userService.hasMatchUser(loginCommand.getUserName(), loginCommand.getPassword());
         if (!isValidUser) {
-            return new ModelAndView("/html/login.html", "error", "此用户不存在");
+            return new ModelAndView("/jsp/login/login.jsp", "error", "此用户不存在");
         }
         User user = userService.findUserByUserName(loginCommand.getUserName());
         user.setLasstVist(new Date());
         user.setLastIp(req.getRemoteAddr());
         userService.LoginSuccess(user);
         req.getSession().setAttribute("user", user);
-        return new ModelAndView("main");
+        return new ModelAndView("main.jsp");
     }
 
     @RequestMapping(value = "/applogin", method = {RequestMethod.POST, RequestMethod.GET}, produces = MediaType.APPLICATION_JSON_VALUE)

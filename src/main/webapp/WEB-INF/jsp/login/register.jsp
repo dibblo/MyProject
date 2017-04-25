@@ -8,15 +8,35 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>Title</title>
+    <title>注册咯</title>
 </head>
 <body>
-<form method="post" action='/login/siteLogin'>
-    <div>
-        账号：<input type="text" name="userName"/><br>
-        密码：<input type="password" name="password"/>
-        <input type="submit" value="登录"/>
-        <input id="register" type="button" value="注册"/>
+<form>
+    <div class="container">
+        <div class="row clearfix">
+            <div class="col-md-12 column">
+                <form role="form">
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Email address</label><input type="email" class="form-control"
+                                                                                    id="exampleInputEmail1"/>
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputPassword1">Password</label><input type="password" class="form-control"
+                                                                                  id="exampleInputPassword1"/>
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputFile">File input</label><input type="file" id="exampleInputFile"/>
+                        <p class="help-block">
+                            Example block-level help text here.
+                        </p>
+                    </div>
+                    <div class="checkbox">
+                        <label><input type="checkbox"/>Check me out</label>
+                    </div>
+                    <button type="submit" class="btn btn-default">Submit</button>
+                </form>
+            </div>
+        </div>
     </div>
 </form>
 </body>
