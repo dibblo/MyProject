@@ -19,22 +19,21 @@ import java.util.HashMap;
 import java.util.Map;
 
 @Controller
-@RequestMapping(value = "/login")
 public class LoginController {
     @Autowired
     private UserService userService;
 
-    @RequestMapping(value = "/login")
+    @RequestMapping(value = "/signin",method = RequestMethod.GET)
     public String loginPage() {
         return "/jsp/login/login.jsp";
     }
 
-    @RequestMapping(value = "/register")
+    @RequestMapping(value = "/signup")
     public String registerPage() {
         return "/jsp/login/register.jsp";
     }
 
-    @RequestMapping(value = "/siteLogin", method = {RequestMethod.POST})
+    @RequestMapping(value = "/signin", method = {RequestMethod.POST})
     public ModelAndView loginCheck(HttpServletRequest req, LoginCommand loginCommand) {
         boolean isValidUser = userService.hasMatchUser(loginCommand.getUserName(), loginCommand.getPassword());
         if (!isValidUser) {
@@ -45,7 +44,7 @@ public class LoginController {
         user.setLastIp(req.getRemoteAddr());
         userService.LoginSuccess(user);
         req.getSession().setAttribute("user", user);
-        return new ModelAndView("main.jsp");
+        return new ModelAndView("/jsp/main.jsp");
     }
 
     @RequestMapping(value = "/applogin", method = {RequestMethod.POST, RequestMethod.GET}, produces = MediaType.APPLICATION_JSON_VALUE)

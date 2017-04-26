@@ -9,6 +9,8 @@
 <html>
 <head>
     <title>注册咯</title>
+    <link href="/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+    <script src="/js/core.js"></script>
 </head>
 <body>
 <form>

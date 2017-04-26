@@ -6,11 +6,11 @@
     <meta http-equiv="X-UA-Compatible" content="IE=Edge" charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link href="/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
-    <script src="/js/core.js"/>
-    <script>
+    <script src="/js/core.js"></script>
+    <script type="text/javascript">
         $(function () {
             $("#register").click(function () {
-                window.location = "/register";
+                window.location = "/signup";
             });
         });
     </script>
@@ -25,7 +25,7 @@
         <div class="col-md-4 column">
         </div>
         <div class="col-md-4 column">
-            <form role="form" method="post" action="/login/siteLogin">
+            <form role="form" method="post" action="/siteLogin">
                 <div class="form-group">
                     <label for="exampleInputEmail1">Email address</label><input type="email" class="form-control"
                                                                                 id="exampleInputEmail1"/>
