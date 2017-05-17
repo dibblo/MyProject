@@ -10,7 +10,7 @@
     <script type="text/javascript">
         $(function () {
             $("#register").click(function () {
-                window.location = "/signup";
+                window.location = "/signin";
             });
         });
     </script>
@@ -25,7 +25,7 @@
         <div class="col-md-4 column">
         </div>
         <div class="col-md-4 column">
-            <form role="form" method="post" action="/siteLogin">
+            <form role="form" method="post" action="/signup">
                 <div class="form-group">
                     <label for="exampleInputEmail1">Email address</label><input type="email" class="form-control"
                                                                                 id="exampleInputEmail1"/>

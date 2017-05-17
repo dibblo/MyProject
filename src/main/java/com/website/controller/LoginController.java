@@ -23,17 +23,17 @@ public class LoginController {
     @Autowired
     private UserService userService;
 
-    @RequestMapping(value = "/signin",method = RequestMethod.GET)
+    @RequestMapping(value = "/tologin",method = RequestMethod.GET)
     public String loginPage() {
         return "/jsp/login/login.jsp";
     }
 
-    @RequestMapping(value = "/signup")
+    @RequestMapping(value = "/signin")
     public String registerPage() {
         return "/jsp/login/register.jsp";
     }
 
-    @RequestMapping(value = "/signin", method = {RequestMethod.POST})
+    @RequestMapping(value = "/signup", method = {RequestMethod.POST})
     public ModelAndView loginCheck(HttpServletRequest req, LoginCommand loginCommand) {
         boolean isValidUser = userService.hasMatchUser(loginCommand.getUserName(), loginCommand.getPassword());
         if (!isValidUser) {
