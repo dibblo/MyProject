@@ -17,8 +17,6 @@ public class User implements Serializable {
 	private int credits;
 	private String lastIp;
 	private Date lasstVist;
-	private String primaryKey;
-	private String publicKey;
 	private String token;
 	public String getUserId() {
 		return userId;
@@ -56,19 +54,6 @@ public class User implements Serializable {
 	public void setLasstVist(Date lasstVist) {
 		this.lasstVist = lasstVist;
 	}
-	public String getPrimaryKey() {
-		return primaryKey;
-	}
-	public void setPrimaryKey(String primaryKey) {
-		this.primaryKey = primaryKey;
-	}
-	public String getPublicKey() {
-		return publicKey;
-	}
-	public void setPublicKey(String publicKey) {
-		this.publicKey = publicKey;
-	}
-	
 	public String getToken() {
 		return token;
 	}
@@ -83,8 +68,6 @@ public class User implements Serializable {
 		user.setLasstVist(rs.getDate("last_visit"));
 		user.setLastIp(rs.getString("last_ip"));
 		user.setPassword(rs.getString("password"));
-		user.setPrimaryKey(rs.getString("primary_key"));
-		user.setPublicKey(rs.getString("publick_key"));
 		user.setToken(rs.getString("token"));
 		return user;
 	}

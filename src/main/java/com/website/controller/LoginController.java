@@ -2,6 +2,7 @@ package com.website.controller;
 
 import com.website.domain.LoginCommand;
 import com.website.domain.User;
+import com.website.securityt.util.MD5;
 import com.website.securityt.util.RSAUtil;
 import com.website.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,7 +24,7 @@ public class LoginController {
     @Autowired
     private UserService userService;
 
-    @RequestMapping(value = "/tologin",method = RequestMethod.GET)
+    @RequestMapping(value = "/tologin", method = RequestMethod.GET)
     public String loginPage() {
         return "/jsp/login/login.jsp";
     }
@@ -35,10 +36,11 @@ public class LoginController {
 
     @RequestMapping(value = "/signup", method = {RequestMethod.POST})
     public ModelAndView loginCheck(HttpServletRequest req, LoginCommand loginCommand) {
-        boolean isValidUser = userService.hasMatchUser(loginCommand.getUserName(), loginCommand.getPassword());
+        boolean isValidUser = userService.hasMatchUser(loginCommand.getUserName());
         if (!isValidUser) {
             return new ModelAndView("/jsp/login/login.jsp", "error", "此用户不存在");
         }
+        userService.userLogin(loginCommand.getUserName(), MD5.getMD5(loginCommand.getPassword()));
         User user = userService.findUserByUserName(loginCommand.getUserName());
         user.setLasstVist(new Date());
         user.setLastIp(req.getRemoteAddr());
@@ -47,23 +49,6 @@ public class LoginController {
         return new ModelAndView("/jsp/main.jsp");
     }
 
-    @RequestMapping(value = "/applogin", method = {RequestMethod.POST, RequestMethod.GET}, produces = MediaType.APPLICATION_JSON_VALUE)
-    @ResponseBody
-    public Map appLogin(LoginCommand loginCommand) throws Exception {
-        Map<String, Object> map = new HashMap<String, Object>();
-        byte[] bytePassword = RSAUtil.decrypt(RSAUtil.getKeyPair().getPrivate(), loginCommand.getPassword());
-        String stringPassword = new String(bytePassword);
-        loginCommand.setPassword(new StringBuffer(stringPassword).reverse().toString());
-        boolean isValidUser = userService.hasMatchUser(loginCommand.getUserName(), loginCommand.getPassword());
-        if (!isValidUser) {
-            map.put("result", 0);
-            map.put("message", "账号密码错误");
-            return map;
-        }
-        map.put("result", 1);
-        map.put("message", "123");
-        return map;
-    }
 
     @RequestMapping(value = "/registermd5", method = {RequestMethod.POST, RequestMethod.GET}, produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
@@ -75,47 +60,14 @@ public class LoginController {
             map.put("message", "此用户名已注册");
             return map;
         }
+        if (!loginCommand.getPassword().equals(loginCommand.getRepassword())) {
+            map.put("result", 0);
+            map.put("message", "两次填写的密码不一致，请检查后重新输入");
+            return map;
+        }
         userService.registerByMd5(loginCommand);
         map.put("result", 1);
         map.put("message", "123");
-        return map;
-    }
-
-    @RequestMapping(value = "/registerrsa", method = {RequestMethod.POST, RequestMethod.GET}, produces = MediaType.APPLICATION_JSON_VALUE)
-    @ResponseBody
-    public Map registerByRSA(LoginCommand loginCommand) {
-        Map<String, Object> map = new HashMap<String, Object>();
-        boolean isRegister = userService.hasRegister(loginCommand.getUserName().trim());
-        if (isRegister) {
-            map.put("result", 0);
-            map.put("message", "此用户名已注册");
-            return map;
-        }
-        userService.registerByRSA(loginCommand);
-        return map;
-    }
-
-    @RequestMapping(value = "/apploginrsa", method = {RequestMethod.POST, RequestMethod.GET}, produces = MediaType.APPLICATION_JSON_VALUE)
-    @ResponseBody
-    public Map appLoginRSA(LoginCommand loginCommand) {
-        Map<String, Object> map = new HashMap<String, Object>();
-        if (loginCommand.isAutoLogin()) {
-
-        } else {
-            if (StringUtils.isEmpty(loginCommand.getUserName()) || StringUtils.isEmpty(loginCommand.getPassword())) {
-                map.put("result", 0);
-                map.put("message", "请输入用户名和密码");
-                return map;
-            }
-            User user = userService.findUserByUserName(loginCommand.getUserName().trim());
-            if (!userService.isPasswordValid(loginCommand.getPassword(), user)) {
-
-            }
-            map.put("result", 1);
-            map.put("message", "success");
-            map.put("token", user.getToken());
-            map.put("publicKey", user.getPublicKey());
-        }
         return map;
     }
 

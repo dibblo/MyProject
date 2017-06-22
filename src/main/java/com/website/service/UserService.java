@@ -21,8 +21,8 @@ public class UserService {
 	@Autowired
 	private LoginLogDao loginLogDao;
 	@Transactional
-	public boolean hasMatchUser(String userName, String password) {
-		int matchUser = userDao.getMatchCount(userName, password);
+	public boolean hasMatchUser(String userName) {
+		int matchUser = userDao.getMatchCount(userName);
 		return matchUser > 0;
 	}
 	@Transactional
@@ -33,7 +33,7 @@ public class UserService {
 
 	public boolean isPasswordValid(String password, User user) {
 		boolean flag = false;
-		RSA.encryptByPublicKey(password.getBytes(), user.getPublicKey());
+		/*RSA.encryptByPublicKey(password.getBytes(), user.getPublicKey());*/
 		return flag;
 	}
 	@Transactional
@@ -64,12 +64,12 @@ public class UserService {
 	}
 	
 	public void registerByRSA(LoginCommand login){
-		User user = new User();
+/*		User user = new User();
 		user.setUserName(login.getUserName());
 		user.setPassword(login.getPassword());
 		user.setPrimaryKey(UUID.randomUUID().toString());
 		user.setPrimaryKey(UUID.randomUUID().toString());
-		userDao.register(user);
+		userDao.register(user);*/
 	}
 
 }

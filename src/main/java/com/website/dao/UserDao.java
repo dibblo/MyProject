@@ -14,7 +14,7 @@ import com.website.domain.User;
 public class UserDao {
 	@Autowired
 	private JdbcTemplate jdbcTemplate;
-	public int getMatchCount(String userName, String password){
+	public int getMatchCount(String userName){
 		String sqlStr = "select count(1) from t_user where user_name=?";
 		return jdbcTemplate.queryForObject(sqlStr, int.class, userName);
 	}
@@ -40,12 +40,12 @@ public class UserDao {
 			}
 		}, userName, password);
 	}
-	
+
 	public void register(User user){
-		String sqlStr = "insert into t_user(user_name,password) values('"+user.getUserName()+"','"+user.getPassword() +"','"+ user.getPrimaryKey()+"','"+user.getPublicKey() + "')";
+		String sqlStr = "insert into t_user(user_name,password) values('"+user.getUserName()+"','"+user.getPassword() +"')";
 		jdbcTemplate.execute(sqlStr);
 	}
-	
+
 	public boolean hasRegister(String userName){
 		String sqlStr = "select count(1) from t_user where user_name = ?";
 		return jdbcTemplate.queryForObject(sqlStr, int.class, userName) != 0;

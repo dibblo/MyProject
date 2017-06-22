@@ -11,6 +11,16 @@ public class LoginCommand implements Serializable{
 	private String userName;
 	private String password;
 	private String token;
+	private String repassword;
+
+	public String getRepassword() {
+		return repassword;
+	}
+
+	public void setRepassword(String repassword) {
+		this.repassword = repassword;
+	}
+
 	private boolean isAutoLogin;
 	
 	public boolean isAutoLogin() {

@@ -46,7 +46,7 @@ public class RSAUtil {
 			final int KEY_SIZE = 1024;// 没什么好说的了，这个值关系到块加密的大小，可以更改，但是不要太大，否则效率会低
 			keyPairGen.initialize(KEY_SIZE, new SecureRandom());
 			KeyPair keyPair = keyPairGen.generateKeyPair();
-			saveKeyPair(keyPair);
+			//saveKeyPair(keyPair);
 			return keyPair;
 		} catch (Exception e) {
 			throw new Exception(e.getMessage());
@@ -72,7 +72,6 @@ public class RSAUtil {
          oos.writeObject(kp);
          oos.close();
          fos.close();
-
 	}
 
 	/**
@@ -218,8 +217,9 @@ public class RSAUtil {
 	}  
 
 	public static void main(String[] args) throws Exception {
-		System.out.println(getKeyPair().getPublic());
-		System.out.println(getKeyPair().getPrivate());
+/*		System.out.println(getKeyPair().getPublic());
+		System.out.println(getKeyPair().getPrivate());*/
+		System.out.println(generateKeyPair().getPublic());
 	}
 
 }

@@ -9,7 +9,7 @@
 <html>
 <head>
     <title>注册咯</title>
-    <link href="/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="/bootstrap/css/bootstrap.min.css" rel="stylesheet"/>
     <script src="/js/core.js"></script>
 </head>
 <body>
@@ -17,14 +17,18 @@
     <div class="container">
         <div class="row clearfix">
             <div class="col-md-12 column">
-                <form role="form">
+                <form role="form" action="/registermd5">
                     <div class="form-group">
-                        <label for="exampleInputEmail1">Email address</label><input type="email" class="form-control"
-                                                                                    id="exampleInputEmail1"/>
+                        <label for="userName">Account</label><input type="input" class="form-control"
+                                                                    id="userName" name="userName"/>
                     </div>
                     <div class="form-group">
-                        <label for="exampleInputPassword1">Password</label><input type="password" class="form-control"
-                                                                                  id="exampleInputPassword1"/>
+                        <label for="password">Password</label><input type="password" class="form-control"
+                                                                     id="password" name="password"/>
+                    </div>
+                    <div class="form-group">
+                        <label for="repassword">Repassword</label><input type="password" class="form-control"
+                                                                         id="repassword"/>
                     </div>
                     <div class="form-group">
                         <label for="exampleInputFile">File input</label><input type="file" id="exampleInputFile"/>
