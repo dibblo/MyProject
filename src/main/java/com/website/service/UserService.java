@@ -47,7 +47,7 @@ public class UserService {
 		loginLogDao.insertLoginLog(loginLog);
 	}
 	@Transactional
-	public User userLogin(String userName, String password) {
+	public int userLogin(String userName, String password) {
 		return userDao.userLogin(userName, password);
 	}
 

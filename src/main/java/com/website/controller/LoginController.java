@@ -40,7 +40,10 @@ public class LoginController {
         if (!isValidUser) {
             return new ModelAndView("/jsp/login/login.jsp", "error", "此用户不存在");
         }
-        userService.userLogin(loginCommand.getUserName(), MD5.getMD5(loginCommand.getPassword()));
+        int userCount = userService.userLogin(loginCommand.getUserName(), MD5.getMD5(loginCommand.getPassword()));
+        if(userCount==0){
+            return new ModelAndView("/jsp/login/login.jsp", "error", "账号或密码不正确，请重新输入");
+        }
         User user = userService.findUserByUserName(loginCommand.getUserName());
         user.setLasstVist(new Date());
         user.setLastIp(req.getRemoteAddr());
@@ -50,7 +53,7 @@ public class LoginController {
     }
 
 
-    @RequestMapping(value = "/registermd5", method = {RequestMethod.POST, RequestMethod.GET}, produces = MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping(value = "/registermd5", method = {RequestMethod.POST, RequestMethod.GET})
     @ResponseBody
     public Map register(LoginCommand loginCommand) {
         Map<String, Object> map = new HashMap<String, Object>();
