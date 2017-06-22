@@ -22,8 +22,8 @@ public class TestUserService extends TestCase {
 	private UserService userService;
 	@Test
 	public void hasMatchUser(){
-		boolean b1 = userService.hasMatchUser("admin", "123456");
-		boolean b2 = userService.hasMatchUser("admin", "111111");
+		boolean b1 = userService.hasMatchUser("admin");
+		boolean b2 = userService.hasMatchUser("admin");
 		assertTrue(b1);
 		//assertTrue(b2); 传进去的为false则会报个null出来表示这个错误结果，并且证明整个流程是错的
 	}
