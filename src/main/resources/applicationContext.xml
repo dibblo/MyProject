@@ -34,9 +34,9 @@
 	<bean id="conversion-service"
 		class="org.springframework.format.support.FormattingConversionServiceFactoryBean">
 	</bean>
-	<mvc:resources location="/WEB-INF/js/" mapping="/js/**"/>
-	<mvc:resources location="/WEB-INF/bootstrap/" mapping="/bootstrap/**"/>
-	<mvc:resources location="/WEB-INF/html/" mapping="/html/**"/>
+	<mvc:resources location="/js/" mapping="/js/**"/>
+	<mvc:resources location="/bootstrap/" mapping="/bootstrap/**"/>
+	<mvc:resources location="/html/" mapping="/html/**"/>
 	<mvc:annotation-driven conversion-service="conversion-service">
 		<mvc:message-converters>
 			<bean

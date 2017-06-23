@@ -26,52 +26,54 @@ public class LoginController {
 
     @RequestMapping(value = "/tologin", method = RequestMethod.GET)
     public String loginPage() {
-        return "/jsp/login/login.jsp";
+        return "/jsp/login/login";
     }
 
     @RequestMapping(value = "/signin")
     public String registerPage() {
-        return "/jsp/login/register.jsp";
+        return "/jsp/login/register";
     }
 
     @RequestMapping(value = "/signup", method = {RequestMethod.POST})
     public ModelAndView loginCheck(HttpServletRequest req, LoginCommand loginCommand) {
         boolean isValidUser = userService.hasMatchUser(loginCommand.getUserName());
         if (!isValidUser) {
-            return new ModelAndView("/jsp/login/login.jsp", "error", "此用户不存在");
+            return new ModelAndView("/jsp/login/login", "error", "此用户不存在");
         }
         int userCount = userService.userLogin(loginCommand.getUserName(), MD5.getMD5(loginCommand.getPassword()));
         if(userCount==0){
-            return new ModelAndView("/jsp/login/login.jsp", "error", "账号或密码不正确，请重新输入");
+            return new ModelAndView("/jsp/login/login", "error", "账号或密码不正确，请重新输入");
         }
         User user = userService.findUserByUserName(loginCommand.getUserName());
         user.setLasstVist(new Date());
         user.setLastIp(req.getRemoteAddr());
         userService.LoginSuccess(user);
         req.getSession().setAttribute("user", user);
-        return new ModelAndView("/jsp/main.jsp");
+        return new ModelAndView("/jsp/main");
     }
 
 
-    @RequestMapping(value = "/registermd5", method = {RequestMethod.POST, RequestMethod.GET})
-    @ResponseBody
-    public Map register(LoginCommand loginCommand) {
+    @RequestMapping(value = "/register", method = {RequestMethod.POST, RequestMethod.GET})
+    public ModelAndView register(LoginCommand loginCommand,HttpServletRequest req) {
         Map<String, Object> map = new HashMap<String, Object>();
         boolean isRegister = userService.hasRegister(loginCommand.getUserName().trim());
         if (isRegister) {
             map.put("result", 0);
             map.put("message", "此用户名已注册");
-            return map;
+            return new ModelAndView("/jsp/login/register", "error", "此用户名已注册");
         }
         if (!loginCommand.getPassword().equals(loginCommand.getRepassword())) {
             map.put("result", 0);
             map.put("message", "两次填写的密码不一致，请检查后重新输入");
-            return map;
+            return new ModelAndView("/jsp/login/register", "error", "两次填写的密码不一致，请检查后重新输入");
         }
         userService.registerByMd5(loginCommand);
-        map.put("result", 1);
-        map.put("message", "123");
-        return map;
+        User user = userService.findUserByUserName(loginCommand.getUserName());
+        user.setLasstVist(new Date());
+        user.setLastIp(req.getRemoteAddr());
+        userService.LoginSuccess(user);
+        req.getSession().setAttribute("user", user);
+        return new ModelAndView("/jsp/main");
     }
 
 }

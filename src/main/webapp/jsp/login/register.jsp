@@ -16,13 +16,12 @@
     </script>
 </head>
 <body>
-<form>
     <div class="container">
         <div class="row clearfix">
             <div class="col-md-4 column">
             </div>
             <div class="col-md-4 column">
-                <form role="form" method="post" action="/registermd5">
+                <form role="form" method="post" action="/register">
                     <div class="form-group">
                         <label for="userName">Account</label><input type="input" class="form-control"
                                                                     id="userName" name="userName"/>
@@ -31,19 +30,16 @@
                         <label for="password">Password</label><input type="password" class="form-control"
                                                                      id="password" name="password"/>
                     </div>
-<%--                    <div class="form-group">
+                    <div class="form-group">
                         <label for="repassword">Repassword</label><input type="password" class="form-control"
                                                                          id="repassword" name="repassword"/>
-                    </div>--%>
-                    <%--<div class="form-group">--%>
-                        <%--<label for="exampleInputFile">File input</label><input type="file" id="exampleInputFile"/>--%>
-                        <%--<p class="help-block">--%>
-                            <%--Example block-level help text here.--%>
-                        <%--</p>--%>
-                    <%--</div>--%>
-                    <%--<div class="checkbox">--%>
-                        <%--<label><input type="checkbox"/>Check me out</label> --%>
-                    <%--</div>--%>
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputFile">File input</label><input type="file" id="exampleInputFile"/>
+                        <p class="help-block">
+                            Example block-level help text here.
+                        </p>
+                    </div>
                     <button type="submit" class="btn btn-default">Submit</button>
                     <button type="button" id="signup" class="btn btn-default">登录</button>
                 </form>
@@ -52,6 +48,5 @@
             </div>
         </div>
     </div>
-</form>
 </body>
 </html>
