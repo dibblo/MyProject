@@ -1,21 +1,21 @@
 <!DOCTYPE html>
 <html lang="en-ZH">
-    <%@page contentType="utf-8" isELIgnored="false" %>
+    <%@page contentType="text/html" pageEncoding="UTF-8" isELIgnored="false" %>
     <head>
         <title>登录咯</title>
         <meta http-equiv="X-UA-Compatible" content="IE=Edge" charset="UTF-8"/>
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
         <link href="/bootstrap/css/bootstrap.min.css" rel="stylesheet"/>
-        <script src="${pageContext.request.contextPath}/js/core.js"></script>
+        <script src="/js/core.js"></script>
         <script type="text/javascript">
             $(function () {
-            $("#register").click(function () {
-            window.location = "/signin";
-            });
-            var error = '${error}';
-            if(error){
-            alert(1111);
-            }
+                $("#register").click(function () {
+                    window.location = "/signin";
+                });
+                var success = '${success}';
+                if ('false'==success) {
+                    alert('${msg}');
+                }
             });
         </script>
     </head>

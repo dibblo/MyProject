@@ -3,15 +3,11 @@ package com.website.controller;
 import com.website.domain.LoginCommand;
 import com.website.domain.User;
 import com.website.securityt.util.MD5;
-import com.website.securityt.util.RSAUtil;
 import com.website.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
-import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
@@ -25,8 +21,8 @@ public class LoginController {
     private UserService userService;
 
     @RequestMapping(value = "/tologin", method = RequestMethod.GET)
-    public String loginPage() {
-        return "/jsp/login/login";
+    public ModelAndView loginPage() {
+        return new ModelAndView("/jsp/login/login");
     }
 
     @RequestMapping(value = "/signin")
@@ -36,13 +32,18 @@ public class LoginController {
 
     @RequestMapping(value = "/signup", method = {RequestMethod.POST})
     public ModelAndView loginCheck(HttpServletRequest req, LoginCommand loginCommand) {
+        Map<String,Object> map = new HashMap<String,Object>();
         boolean isValidUser = userService.hasMatchUser(loginCommand.getUserName());
         if (!isValidUser) {
-            return new ModelAndView("/jsp/login/login", "error", "此用户不存在");
+            map.put("msg", "此用户不存在");
+            map.put("success",false);
+            return new ModelAndView("/jsp/login/login", map);
         }
         int userCount = userService.userLogin(loginCommand.getUserName(), MD5.getMD5(loginCommand.getPassword()));
-        if(userCount==0){
-            return new ModelAndView("/jsp/login/login", "error", "账号或密码不正确，请重新输入");
+        if (userCount == 0) {
+            map.put("msg","账号或密码不正确，请重新输入");
+            map.put("success",false);
+            return new ModelAndView("/jsp/login/login",map);
         }
         User user = userService.findUserByUserName(loginCommand.getUserName());
         user.setLasstVist(new Date());
@@ -53,19 +54,19 @@ public class LoginController {
     }
 
 
-    @RequestMapping(value = "/register", method = {RequestMethod.POST, RequestMethod.GET})
-    public ModelAndView register(LoginCommand loginCommand,HttpServletRequest req) {
-        Map<String, Object> map = new HashMap<String, Object>();
+    @RequestMapping(value = "/register", method = {RequestMethod.POST})
+    public ModelAndView register(LoginCommand loginCommand, HttpServletRequest req) {
         boolean isRegister = userService.hasRegister(loginCommand.getUserName().trim());
+        Map<String,Object> map = new HashMap<String,Object>();
         if (isRegister) {
-            map.put("result", 0);
-            map.put("message", "此用户名已注册");
-            return new ModelAndView("/jsp/login/register", "error", "此用户名已注册");
+            map.put("msg", "此用户名已注册");
+            map.put("success",false);
+            return new ModelAndView("/jsp/login/register", map);
         }
         if (!loginCommand.getPassword().equals(loginCommand.getRepassword())) {
-            map.put("result", 0);
-            map.put("message", "两次填写的密码不一致，请检查后重新输入");
-            return new ModelAndView("/jsp/login/register", "error", "两次填写的密码不一致，请检查后重新输入");
+            map.put("msg","两次填写的密码不一致，请检查后重新输入");
+            map.put("success",false);
+            return new ModelAndView("/jsp/login/register", map);
         }
         userService.registerByMd5(loginCommand);
         User user = userService.findUserByUserName(loginCommand.getUserName());

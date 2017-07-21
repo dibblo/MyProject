@@ -54,6 +54,7 @@ public class UserService {
 	@Transactional
 	public void registerByMd5(LoginCommand login) {
 		User user = new User();
+		user.setUserId(UUID.randomUUID().toString());
 		user.setUserName(login.getUserName());
 		user.setPassword((MD5.getMD5(login.getPassword())));
 		userDao.register(user);

@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en-ZH">
-    <%@page contentType="utf-8" %>
+<%@page contentType="text/html" pageEncoding="UTF-8" isELIgnored="false" %>
     <head>
         <title>注册咯</title>
         <meta http-equiv="X-UA-Compatible" content="IE=Edge" charset="UTF-8" />
@@ -12,6 +12,10 @@
             $("#signup").click(function () {
                 window.location = "/tologin";
             });
+            var success = '${success}';
+            if ('false'==success) {
+                alert('${msg}');
+            }
         });
     </script>
 </head>
