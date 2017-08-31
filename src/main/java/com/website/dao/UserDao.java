@@ -1,51 +1,24 @@
 package com.website.dao;
 
-import java.sql.ResultSet;
-import java.sql.SQLException;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.jdbc.core.RowMapper;
-import org.springframework.stereotype.Repository;
-
 import com.website.domain.User;
+import com.website.sqlprovider.UserSqlProvider;
+import org.apache.ibatis.annotations.*;
 
-@Repository
-public class UserDao {
-    @Autowired
-    private JdbcTemplate jdbcTemplate;
+public interface UserDao {
 
-    public int getMatchCount(String userName) {
-        String sqlStr = "select count(1) from t_user where user_name=?";
-        return jdbcTemplate.queryForObject(sqlStr, int.class, userName);
-    }
+    @SelectProvider(type = UserSqlProvider.class, method = "getMatchCount")
+    @Options(useCache = true, flushCache = Options.FlushCachePolicy.FALSE, timeout = 10000)
+    @ResultType(value = Integer.class)
+    int getMatchCount(@Param("userName") String userName);
 
-    public User findUserByUserName(final String userName) {
-        String sqlStr = "select * from t_user where user_name = ? ";
-        return jdbcTemplate.queryForObject(sqlStr, new RowMapper<User>() {
-            public User mapRow(ResultSet rs, int rowNum) throws SQLException {
-                return User.initUser(rs);
-            }
-        }, userName);
-    }
+    @SelectProvider(type = UserSqlProvider.class, method = "getMatchUser")
+    @Options(useCache = true, flushCache = Options.FlushCachePolicy.FALSE, timeout = 10000)
+    @ResultMap(value = "User")
+    User getMatchUser(@Param("userName")String userName,@Param("password") String passWord);
 
-    public void updateLoginInfo(User user) {
-        String sqlStr = "update t_user set last_visit=?,last_ip=?,credits=? where user_id=?";
-        jdbcTemplate.update(sqlStr, user.getLasstVist(), user.getLastIp(), user.getCredits(), user.getUserId());
-    }
+    @UpdateProvider(type = UserSqlProvider.class, method = "updateLoginInfo")
+    void updateLoginInfo(@Param("user") User user);
 
-    public int userLogin(final String userName, final String password) {
-        String sqlStr = "select count(1) from t_user where user_name = ? and password = ?";
-        return jdbcTemplate.queryForObject(sqlStr, int.class, userName, password);
-    }
-
-    public void register(User user) {
-        String sqlStr = "insert into t_user(user_name,password) values('" + user.getUserName() + "','" + user.getPassword() + "')";
-        jdbcTemplate.execute(sqlStr);
-    }
-
-    public boolean hasRegister(String userName) {
-        String sqlStr = "select count(1) from t_user where user_name = ?";
-        return jdbcTemplate.queryForObject(sqlStr, int.class, userName) != 0;
-    }
+    @InsertProvider(type = UserSqlProvider.class, method = "register")
+    void register(@Param("user") User user);
 }

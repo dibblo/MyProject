@@ -30,7 +30,7 @@ public class TestUserService extends TestCase {
 	
 	@Test
 	public void findUserByName(){
-		User user = userService.findUserByUserName("admin");
+		User user = userService.findUserByUserName("admin","123123");
 		assertEquals(user.getUserName(), "admin");
 	}
 	@Test

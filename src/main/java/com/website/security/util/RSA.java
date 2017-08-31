@@ -1,4 +1,4 @@
-package com.website.securityt.util;
+package com.website.security.util;
 import java.security.Key;
 import java.security.KeyFactory;
 import java.security.KeyPair;

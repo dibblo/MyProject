@@ -1,4 +1,4 @@
-package com.website.securityt.util;
+package com.website.security.util;
 
 import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;
