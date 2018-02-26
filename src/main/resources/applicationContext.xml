@@ -1,36 +1,27 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!-- 引用Spring的多个Schema空间的格式定义文件 -->
-<beans xmlns="http://www.springframework.org/schema/beans"
-       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<?xml version="1.0" encoding="UTF-8"?><!-- 引用Spring的多个Schema空间的格式定义文件 -->
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xmlns:context="http://www.springframework.org/schema/context"
-       xmlns:mvc="http://www.springframework.org/schema/mvc"
-       xmlns:aop="http://www.springframework.org/schema/aop"
-       xmlns:tx="http://www.springframework.org/schema/tx"
-       xsi:schemaLocation="
+       xmlns:mvc="http://www.springframework.org/schema/mvc" xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:tx="http://www.springframework.org/schema/tx" xsi:schemaLocation="
            http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
            http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd
            http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-3.2.xsd
            http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.0.xsd
            http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.0.xsd
-           "
-       default-autowire="byName">
+           " default-autowire="byName">
     <context:component-scan base-package="com.website.dao"></context:component-scan>
-    <context:component-scan base-package="com.website.service"></context:component-scan>
     <context:component-scan base-package="com.website.controller"></context:component-scan>
 
     <bean id="conversion-service"
-          class="org.springframework.format.support.FormattingConversionServiceFactoryBean">
-    </bean>
+          class="org.springframework.format.support.FormattingConversionServiceFactoryBean"></bean>
     <mvc:resources location="/js/" mapping="/js/**"/>
     <mvc:resources location="/bootstrap/" mapping="/bootstrap/**"/>
     <mvc:resources location="/html/" mapping="/html/**"/>
     <mvc:annotation-driven conversion-service="conversion-service">
         <mvc:message-converters>
-            <bean
-                    class="org.springframework.http.converter.ByteArrayHttpMessageConverter"/>
+            <bean class="org.springframework.http.converter.ByteArrayHttpMessageConverter"/>
             <bean class="org.springframework.http.converter.FormHttpMessageConverter"/>
-            <bean
-                    class="org.springframework.http.converter.xml.SourceHttpMessageConverter"/>
+            <bean class="org.springframework.http.converter.xml.SourceHttpMessageConverter"/>
             <bean class="org.springframework.http.converter.StringHttpMessageConverter">
                 <property name="supportedMediaTypes">
                     <list>
@@ -52,7 +43,7 @@
 
     <aop:config proxy-target-class="true">
         <aop:pointcut
-                expression="execution(* com.website.service.*.*(..)) or execution(* com.rbac.permission.service.*.*(..)) or execution(* com.support.permission.service.*.*(..))"
+                expression="execution(* com.website.service.*.*(..)) or execution(* com.rbacimp..service.*.*(..)) "
                 id="serviceMethod"/>
         <aop:advisor advice-ref="txAdvice" pointcut-ref="serviceMethod"/>
     </aop:config>
@@ -63,34 +54,32 @@
         </tx:attributes>
     </tx:advice>
 
-    <bean id="propertyConfigurer"
-          class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+    <bean id="propertyConfigurer" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
         <property name="location" value="classpath:jdbc.properties"/>
         <property name="fileEncoding">
             <value>UTF-8</value>
         </property>
     </bean>
 
-    <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource"
-          destroy-method="close">
+    <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
         <property name="driverClassName" value="${driver}"/>
         <property name="url" value="${url}"/>
         <property name="username" value="${username}"/>
         <property name="password" value="${password}"/>
         <!-- 初始化连接大小 -->
-        <property name="initialSize" value="${initialSize}" />
+        <property name="initialSize" value="${initialSize}"/>
         <!-- 连接池最大数量 -->
-        <property name="maxActive" value="${maxActive}" />
+        <property name="maxActive" value="${maxActive}"/>
         <!-- 连接池最大空闲 -->
-        <property name="maxIdle" value="${maxIdle}" />
+        <property name="maxIdle" value="${maxIdle}"/>
         <!-- 连接池最小空闲 -->
-        <property name="minIdle" value="${minIdle}" />
+        <property name="minIdle" value="${minIdle}"/>
         <!-- 获取连接最大等待时间 -->
-        <property name="maxWait" value="${maxWait}" />
+        <property name="maxWait" value="${maxWait}"/>
     </bean>
     <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
         <property name="basePackage" value="com"/>
-        <property name="sqlSessionFactoryBeanName" value="MyBatisSqlSessionFactory" />
+        <property name="sqlSessionFactoryBeanName" value="MyBatisSqlSessionFactory"/>
     </bean>
     <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
         <property name="dataSource" ref="dataSource"/>
@@ -105,6 +94,7 @@
         <property name="dataSource" ref="dataSource"/>
         <!-- 文件映射器，指定类文件 -->
         <property name="configLocation" value="classpath:configuration.xml"/>
+        <property name="typeAliasesPackage" value="com.rbacimp.mybatis.bean"/>
         <!-- 自动扫描mapping.xml文件 -->
         <!--<property name="mapperLocations" value="classpath:com/chinasoft/ssm/mapper/*.xml"></property>-->
     </bean>

@@ -1,12 +1,49 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<beans xmlns="http://www.springframework.org/schema/beans"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
-	<bean
-		class="org.springframework.web.servlet.view.InternalResourceViewResolver">
-		<property name="viewClass"
-			value="org.springframework.web.servlet.view.JstlView" />
-		<property name="prefix" value="/WEB-INF" />
-		<property name="suffix" value=".jsp" />
-	</bean>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
+
+
+    <!--springmvc里提供了多个视图解析器，InternalResourceViewResolver就是其中之一
+    我们知道，当处理器返回逻辑视图时（也就是return “string”），要经过视图解析器链，前面的解析器能处理的，就不会继续往下传播。
+    如果不能处理就要沿着解析器链继续寻找，直到找到合适的视图解析器（概括为：能解析的，不继续往下找，不能解析的，要继续往下找解析器）。
+    当经过视图解析器1时，如果能解析就解析而且不会再继续往下。如果不能执行就返回null，这样下面的解析器才能处理。
+    但是对于解析器InternalResourceViewResolver来说，不管能不能解析它都不会返回null，也就是说它拦截了所有的逻辑视图，
+    让后续的解析器得不到执行，所以InternalResourceViewResolver必须放在最后。所以所以InternalResourceViewResolver必须放在最后的order值一定大于
+    所有的其他视图解析器
+     -->
+    <bean id="viewResolverCommon" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+        <property name="prefix" value="/WEB-INF/jsp/"/>
+        <property name="suffix" value=".jsp"/> <!--可为空,方便实现自已的依据扩展名来选择视图解释类的逻辑  -->
+        <property name="order" value="1"/>
+    </bean>
+
+    <!-- 配置freeMarker视图解析器 -->
+    <bean id="viewResolverFtl" class="org.springframework.web.servlet.view.freemarker.FreeMarkerViewResolver">
+        <property name="viewClass" value="org.springframework.web.servlet.view.freemarker.FreeMarkerView"/>
+        <property name="contentType" value="text/html; charset=utf-8"/>
+        <property name="cache" value="true"/>
+        <property name="suffix" value=".ftl"/>
+        <property name="order" value="0"/>
+    </bean>
+    <!-- 配置freeMarker的模板路径 -->
+    <bean id="freemarkerConfig" class="org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer">
+        <property name="templateLoaderPath">
+            <value>/WEB-INF/ftl/</value>
+        </property>
+        <property name="freemarkerVariables">
+            <map>
+                <entry key="xml_escape" value-ref="fmXmlEscape"/>
+            </map>
+        </property>
+        <property name="defaultEncoding">
+            <value>utf-8</value>
+        </property>
+        <property name="freemarkerSettings">
+            <props>
+                <prop key="template_update_delay">3600</prop>
+            </props>
+        </property>
+    </bean>
+    <bean id="fmXmlEscape" class="freemarker.template.utility.XmlEscape"/>
+
 </beans>

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
+        "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+
+<mapper namespace="com.rbacimp.mybatis.dao.UserDao">
+    <resultMap id="User" type="User">
+        <id property="id" column="id" javaType="string" jdbcType="VARCHAR" />
+        <result property="lastVisit" column="last_visit" javaType="date" jdbcType="DATE" />
+        <result property="userName" column="user_name" javaType="string" jdbcType="VARCHAR" />
+        <result property="password" column="password" javaType="string" jdbcType="VARCHAR" />
+        <result property="status" column="status" javaType="string" jdbcType="VARCHAR" />
+        <result property="lastIp" column="last_ip" javaType="string" jdbcType="VARCHAR" />
+        <result property="extConfig" column="extConfig" javaType="string" jdbcType="VARCHAR" />
+    </resultMap>
+</mapper>

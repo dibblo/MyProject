@@ -1,8 +1,8 @@
 package com.website.controller;
 
-import org.apache.commons.fileupload.FileItem;
+/*import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
-import org.apache.commons.fileupload.servlet.ServletFileUpload;
+import org.apache.commons.fileupload.servlet.ServletFileUpload;*/
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -22,7 +22,7 @@ import java.util.List;
 @Controller
 @RequestMapping(name = "/file")
 public class FileController {
-    @ResponseBody
+    /*@ResponseBody
     @RequestMapping(value = "/upload", method = {RequestMethod.GET, RequestMethod.POST})
     public HashMap<String, Object> upload(HttpServletRequest request) {
         HashMap<String, Object> map = new HashMap<String, Object>();
@@ -102,7 +102,7 @@ public class FileController {
         }
         map.put("msg",message);
         return map;
-    }
+    }*/
 
 
     @RequestMapping(value = "/fileupload", method = RequestMethod.GET)

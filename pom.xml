@@ -25,6 +25,12 @@
 	</build>
 	<dependencies>
 		<dependency>
+			<groupId>org.sonarsource.sonar-runner</groupId>
+			<artifactId>sonar-runner-batch</artifactId>
+			<version>2.5.1</version>
+		</dependency>
+		<!-- mybatis数据库支持 START-->
+		<dependency>
 			<groupId>org.mybatis</groupId>
 			<artifactId>mybatis</artifactId>
 			<version>3.4.5</version>
@@ -34,26 +40,35 @@
 			<artifactId>mybatis-spring</artifactId>
 			<version>1.3.1</version>
 		</dependency>
+		<!-- mybatis数据库支持 END-->
+		<!-- ehcache缓存支持 START-->
+		<dependency>
+			<groupId>org.ehcache</groupId>
+			<artifactId>ehcache</artifactId>
+			<version>3.4.0</version>
+		</dependency>
+		<!-- ehcache缓存支持 END-->
+		<!-- shiro 安全框架 START-->
 		<dependency>
 			<groupId>org.apache.shiro</groupId>
 			<artifactId>shiro-core</artifactId>
 			<version>1.2.2</version>
 		</dependency>
+		<!-- shiro 安全框架 END -->
+		<!-- dbcp 连接池技术 START-->
 		<dependency>
 			<groupId>commons-dbcp</groupId>
 			<artifactId>commons-dbcp</artifactId>
 			<version>1.4</version>
 		</dependency>
+		<!-- dbcp 连接池技术 END-->
+        <!-- freeMarker 前端页面框架 START -->
 		<dependency>
-			<groupId>commons-logging</groupId>
-			<artifactId>commons-logging</artifactId>
-			<version>1.2</version>
+			<groupId>org.freemarker</groupId>
+			<artifactId>freemarker</artifactId>
+			<version>2.3.26-incubating</version>
 		</dependency>
-		<dependency>
-			<groupId>commons-fileupload</groupId>
-			<artifactId>commons-fileupload</artifactId>
-            <version>1.2.1</version>
-		</dependency>
+		<!-- freeMarker 前端页面框架 END -->
 		<dependency>
 			<groupId>commons-io</groupId>
 			<artifactId>commons-io</artifactId>
@@ -65,7 +80,11 @@
 			<artifactId>spring-context</artifactId>
 			<version>4.2.2.RELEASE</version>
 		</dependency>
-
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-context-support</artifactId>
+			<version>4.2.2.RELEASE</version>
+		</dependency>
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-jdbc</artifactId>
@@ -116,8 +135,6 @@
 			<artifactId>junit</artifactId>
 			<version>4.12</version>
 		</dependency>
-		<!-- <dependency> <groupId>org.springframework</groupId> <artifactId>spring-test</artifactId> 
-			<version>4.2.2.RELEASE</version> </dependency> -->
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-test</artifactId>
@@ -160,11 +177,11 @@
 			<artifactId>spring-security-config</artifactId>
 			<version>4.2.2.RELEASE</version>
 		</dependency>-->
-		<dependency>
+<!--		<dependency>
 			<groupId>org.apache.zookeeper</groupId>
 			<artifactId>zookeeper</artifactId>
 			<version>3.4.7</version>
-		</dependency>
+		</dependency>-->
 		<dependency>
 			<groupId>org.bouncycastle</groupId>
 			<artifactId>bcprov-jdk15on</artifactId>
