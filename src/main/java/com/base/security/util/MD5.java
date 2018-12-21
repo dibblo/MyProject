@@ -4,6 +4,7 @@ import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
+import sun.applet.Main;
 import sun.misc.BASE64Encoder;
 
 public class MD5 {
@@ -27,5 +28,10 @@ public class MD5 {
 			e.printStackTrace();
 		}
 		return newstr;
+	}
+
+	public static void main(String args[]){
+		MD5.getMD5("sys");
+		System.out.println(MD5.getMD5("sys"));
 	}
 }
